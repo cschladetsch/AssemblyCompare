@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <assert.h>
 
-extern "C" void __fastcall bubble_sort();
+extern "C" int __fastcall bubble_sort();
 
 int main() {
-    bubble_sort();
+    int ret = bubble_sort();
+    assert(ret == 123);
     return 0;
 }
 
 extern "C" int from_c(int n) {
     printf("%d\n", n);
-    return 42;
+    return 123;
 }

@@ -5,7 +5,7 @@ bubble_sort proc
     sub rsp, 28h
     mov [rsp], rcx
 
-    mov eax,42
+    mov rcx,42
     call [from_c]
 
     add rsp, 28h
