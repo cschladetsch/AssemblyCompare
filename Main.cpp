@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include <assert.h>
 
-extern "C" int __fastcall bubble_sort();
+extern "C" int retcon();
+extern "C" int bubble_sort(int *, int);
+
+void print(int* n, int c) {
+    while (c-- > 0) {
+        printf("%d ", n[c]);
+    }
+}
+
 
 int main() {
-    int ret = bubble_sort();
-    assert(ret == 123);
+    int n[] = { 3,2,1 };
+    int ret = bubble_sort(n, 3);
+    print(n, 3);
     return 0;
 }
 
