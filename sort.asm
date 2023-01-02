@@ -1,52 +1,48 @@
+.486
+.model flat
 .code
 align 16
-extern from_c : proc
 
-retcon proc
-    sub rsp, 28h
-    mov [rsp], rcx
+_bubble_sort proc
+    push ebp
+    mov ebp, esp
+    push edi
+    push esi
+    push ebx
 
-    mov rcx,42
-    call [from_c]
-
-    add rsp, 28h
-    ret
-retcon  endp
-
-; input:
-;   stack -1: count
-;   stack -0: address
-bubble_sort proc
-    mov rax, 0
-    mov rbx, qword ptr[rsp + 8]   ; load array base address
-    mov rcx, qword ptr[rsp + 16]  ; load array size
+    mov eax, [ebp + 8]   ; load array base address
+    mov ecx, [ebp + 12]  ; load array size
 
 next_iter:
-    cmp rcx, 1
+    cmp ecx, 1
     jle done
 
-    mov rdx, 0
+    mov edx, 0
 
 inner_loop:
-    mov r8, qword ptr[rbx + rdx*8]
-    mov r9, qword ptr[rbx + rdx*8 + 8]
-    cmp r8, r9
+    mov esi, [eax + edx*4]
+    mov edi, [eax + edx*4 + 4]
+    cmp esi, edi
     jg swap
-    add rdx, 1
-    cmp rdx, rcx
+    add edx, 1
+    cmp edx, ecx
     jl inner_loop
 
-    dec rcx
+    dec ecx
     jmp next_iter
 
 swap:
-    mov qword ptr[rbx + rdx*8], r9
-    mov qword ptr[rbx + rdx*8 + 8], r8
+    mov [eax + edx*4], edi
+    mov [eax + edx*4 + 4], esi
     jmp inner_loop
 
 done:
+    pop ebx
+    pop esi
+    pop edi
+    pop ebp
     ret
-bubble_sort endp
+_bubble_sort endp
 
 
 
